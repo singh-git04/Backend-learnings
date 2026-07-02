@@ -1,0 +1,13 @@
+how to run output in terminal  = node filename
+
+what is server? 
+{A server is a computer (or software) that receives requests from users and sends back the requested data or service.}
+or.....
+{server is a machine which have its own  os, processes and storage. 
+in simple words it provides the output of user request }
+[npm init -y]
+
+what is node modules, package-lock.json and package.json 
+node_modules → Actual packages 
+package.json → List of required packages + project details 
+package-lock.json → Exact versions of those packages
