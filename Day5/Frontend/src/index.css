@@ -28,3 +28,9 @@ html{
   border-radius: 0.7rem;
   max-width: 30rem;
 }
+
+.noteForm{
+  padding: 1rem;
+  display: flex; 
+  gap: 1rem;
+}

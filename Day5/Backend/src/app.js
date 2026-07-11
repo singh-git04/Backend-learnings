@@ -13,11 +13,15 @@ app.use(express.json())
     -req.body = {title ,description}
  */
 
+
     app.post('/api/notes', async (req,res)=>{
         const{title, description} = req.body
         
+        
+        
     const note = await noteModel.create({
             title,description
+
         })
         res.status(201).json({
             message : 'Note Created Successfully',
@@ -64,9 +68,9 @@ app.use(express.json())
      */
         app.patch('/api/notes/:id', async(req,res)=>{
             const id = req.params.id
-            const {description} = req.body
+            const {title,description} = req.body
 
-            const note = await noteModel.findOneAndUpdate(id,{description})
+            const note = await noteModel.findByIdAndUpdate(id,{title,description})
 
             res.status(200).json({
                 message: 'Modified successfully'
