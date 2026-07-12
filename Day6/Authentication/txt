@@ -1,0 +1,18 @@
+Authentication : means [ Identify request from which user ]
+                ex:  request from inst server (find user)
+
+
+Authorization : means [ What action user can perform ]
+                ex: access of room (student , teacher, director)
+
+                user -> register -> server store data
+                server -> genrate Token with signature(JWT_SECRET) -> user
+                [every time user request server Identify who?]
+
+
+Validation :  means [ Check format of data ]
+                ex: Email, Phone no. (on signup)
+
+
+Verfication : means [ data is correct or incorrect ]
+                ex: Does it belongs to you like email
