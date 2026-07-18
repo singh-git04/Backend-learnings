@@ -2,6 +2,7 @@ const userModel = require("../models/userModel")
 const crypto = require("crypto")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
+const { log } = require("console")
 
 
 async function registerController (req,res){
@@ -31,9 +32,11 @@ async function registerController (req,res){
     })
 
     const token = jwt.sign({
-        id:user._id
+        id:user._id,
+        username: user.username
     },process.env.JWT_SECRET,{expiresIn : '1d'})
 
+    
     res.cookie("token",token)
 
     res.status(201).json({
@@ -71,7 +74,8 @@ async function loginController (req, res){
     }
 
     const token = jwt.sign({
-        id:user._id
+        id:user._id,
+        username: user.username
     },process.env.JWT_SECRET,{expiresIn: '1d'})
 
     res.cookie("token",token)

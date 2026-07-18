@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
         type: String,
         default: " "
     }, 
-   
+     
 })
 
 const postModel = mongoose.model("posts",postSchema)
