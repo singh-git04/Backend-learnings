@@ -1,0 +1,47 @@
+import React, { useState } from 'react'
+import { Link } from 'react-router'
+import axios from 'axios'
+
+const Register = () => {
+
+const [username, setUsername] = useState("");
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+function handleFormSubmit(e){
+    e.preventDefault()
+}
+
+  return (
+ <main>
+    <div className="form-container">
+        <h1>Register</h1>
+        <form onSubmit={handleFormSubmit}>
+
+            <input
+            onInput={(e)=> {setUsername(e.target.value)}}
+             type="text" 
+            placeholder='Enter username'
+             name='username' />
+
+            <input
+            onInput={(e)=> {setEmail(e.target.value)}}
+             type="text"
+             placeholder='Enter email'
+              name='email' />
+
+            <input 
+            onInput={(e)=> {setPassword(e.target.value)}}
+            type="text"
+            placeholder='Enter password'
+            name='password' />
+
+            <button>Register</button>
+        </form>
+        <p>Already have account! <Link className='toggleAuthForm' to='/login'>Login</Link> </p>
+    </div>
+   </main>
+  )
+}
+
+export default Register
