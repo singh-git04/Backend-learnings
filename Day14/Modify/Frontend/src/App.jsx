@@ -1,8 +1,9 @@
-import "./index.css"
 import FaceExpression from "./features/Expression/components/FaceExpression"
+
  
 
 function App() {
+ 
 
   return (
    <FaceExpression/>
