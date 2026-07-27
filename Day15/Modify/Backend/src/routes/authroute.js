@@ -21,4 +21,9 @@ routes.post("/login",authController.login)
 
 routes.get("/getMe",authMiddleWare.authUser,authController.getMe)
 
+
+/* 
+    logout
+*/
+routes.get("/logout",authController.logout)
 module.exports = routes
