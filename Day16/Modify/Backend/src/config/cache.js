@@ -15,3 +15,6 @@ const redis = new Redis({
     })
 
 module.exports = redis
+
+
+// redis [key : value] pair mai store krta hai [type:string]
