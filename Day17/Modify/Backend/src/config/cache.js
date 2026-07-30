@@ -1,0 +1,20 @@
+const Redis = require("ioredis").default // default to get suggestion
+
+const redis = new Redis({
+ host: process.env.REDIS_HOST ,
+ port: process.env.REDIS_PORT ,
+ password: process.env.REDIS_PASSWORD,
+})
+
+    redis.on("connect",()=>{
+        console.log('Connected to Redis server')
+    })
+
+    redis.on("error",(err)=>{
+        console.log(err)
+    })
+
+module.exports = redis
+
+
+// redis [key : value] pair mai store krta hai [type:string]

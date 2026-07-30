@@ -1,0 +1,16 @@
+.button{
+    padding-inline: 1rem;
+    padding-block: .5rem;
+
+    border: none;
+    border-radius: .8rem;
+
+    color: white;
+    background-color:rgb(255, 85, 0)
+
+}
+
+button:active{
+    cursor: pointer;
+
+}
