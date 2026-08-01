@@ -1,0 +1,300 @@
+.player-shell {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 15, 0.95),
+    rgba(10, 10, 15, 0.55),
+    transparent
+  );
+
+  backdrop-filter: blur(25px);
+}
+
+.player-card {
+  width: min(1100px, 100%);
+
+  display: grid;
+  grid-template-columns: 280px 1fr 220px;
+  align-items: center;
+  gap: 24px;
+
+  padding: 18px 24px;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(30px);
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.05);
+
+  color: #fff;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.player-poster {
+  width: 72px;
+  height: 72px;
+
+  flex-shrink: 0;
+
+  object-fit: cover;
+  border-radius: 18px;
+
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+}
+
+.player-title {
+  margin: 0;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-subtitle {
+  margin-top: 6px;
+
+  font-size: 14px;
+  color: #b5b5b5;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.player-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.player-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 48px;
+  height: 48px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #fff;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &--primary {
+    width: 62px;
+    height: 62px;
+
+    background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.45);
+
+    &:hover {
+      transform: scale(1.08);
+
+      box-shadow: 0 18px 40px rgba(139, 92, 246, 0.55);
+    }
+  }
+}
+
+.player-progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.player-time {
+  width: 42px;
+
+  text-align: center;
+
+  font-size: 13px;
+  color: #d1d5db;
+}
+
+.player-range {
+  flex: 1;
+
+  appearance: none;
+
+  height: 5px;
+
+  border-radius: 999px;
+
+  background: #3d3d3d;
+
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+
+    background: #8b5cf6;
+
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.6);
+
+    transition: 0.2s;
+
+    &:hover {
+      transform: scale(1.25);
+    }
+  }
+}
+
+.player-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+}
+
+.player-speed-label {
+  font-size: 14px;
+  color: #d1d5db;
+
+  white-space: nowrap;
+}
+
+.player-speed-select {
+  width: 110px;
+  min-width: 110px;
+
+  padding: 10px 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #fff;
+
+  outline: none;
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &:focus {
+    border-color: #8b5cf6;
+  }
+
+  option {
+    background: #111827;
+    color: #fff;
+  }
+}
+
+@media (max-width: 900px) {
+  .player-card {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .player-info {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .player-controls {
+    order: 2;
+  }
+
+  .player-footer {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .player-shell {
+    padding: 12px;
+  }
+
+  .player-card {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .player-poster {
+    width: 62px;
+    height: 62px;
+  }
+
+  .player-btn {
+    width: 44px;
+    height: 44px;
+
+    &--primary {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  .player-buttons {
+    gap: 12px;
+  }
+
+  .player-title {
+    font-size: 16px;
+  }
+
+  .player-subtitle {
+    font-size: 13px;
+  }
+
+  .player-speed-select {
+    width: 100px;
+  }
+}
