@@ -1,0 +1,5 @@
+Topic : express validator and error handling 
+error kabhi bhi html format mai nahi bhej rhey hotey hai humesha html format mai hi jana chahiye
+
+in package.json Change type:module
+
