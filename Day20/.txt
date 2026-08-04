@@ -1,0 +1,26 @@
+---> Socket io 
+
+--->http
+                            connected
+    user A        --->       server        <--- user B
+    (request)       --->     accept        <--- (request)
+                            response
+in http user have to request then get's response and connection ends. 
+
+
+--->Socket.io
+                            connected
+    user A        --->       socket.IO        <--- user B
+    (request)       --->     accept        <--- (request)
+                    <--- response immediatly--->
+
+            with Socket.io connection remains established
+
+
+// Remember this 
+io ---> server
+socket ---> single user
+
+
+on ---> listen event 
+emit ---> fire event
