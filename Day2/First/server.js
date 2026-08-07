@@ -2,7 +2,7 @@ const express = require("express")     // require express
 
 const app = express()               // call express and store in a variable
 
-app.get('/', (req,res)=>{           // send respone on server
+app.get('/', (req,res)=>{           // send response on server
     res.send('Hello world')
 })
 

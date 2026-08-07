@@ -2,9 +2,9 @@
 
 const express = require("express")
 const noteModel = require("./models/notemodels")
+
+
 const app = express()
-
-
 app.use(express.json())
 /* 
 - Post / notes 
