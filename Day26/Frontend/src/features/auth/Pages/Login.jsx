@@ -2,10 +2,16 @@ import React, { useState } from 'react'
 import {Link}    from 'react-router-dom'
 import { useAuth } from '../hook/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+
 
 const Login = () => { 
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+
+const user = useSelector((state)=>state.auth.user)
+const loading = useSelector((state)=>state.auth.loading)
 
 const {handleLogin } = useAuth()
 const navigate = useNavigate()
@@ -21,6 +27,9 @@ async function handleSubmit(e){
         await handleLogin(playload)
         navigate('/')
     }
+    if(!loading && user){
+            return  <Navigate to="/" replace />
+        }
   return (
     <section className='min-h-screen bg-zinc-950 px-4 py-10 text-zinc-100 sm:px-6 lg:px-8'>
         <div className='mx-auto min-h-[85vh] w-full max-w-5xl flex items-center  justify-center'>
@@ -43,6 +52,7 @@ async function handleSubmit(e){
                             id='email'
                             type='email'
                             value={email}
+                            autoComplete='none'
                             placeholder='you@example.com' 
                             required
                             className='w-full rounded-lg border border-zinc-700 bg-zinc-950/80 px-4 py-3 text-zinc-100 outline-none ring-0 transition focus:border-[#31b8c6] focus:shadow-[0_0_0_3px_rgba(49,184,198,0.25)]'
@@ -50,7 +60,7 @@ async function handleSubmit(e){
                     </div>
 
                     <div>
-                        <label htmlFor="Password" className='mb-2 block text-sm font-medium text-zinc-200'
+                        <label htmlFor="password" className='mb-2 block text-sm font-medium text-zinc-200'
                         >Password</label>
                         <input onChange={e=>{
                             setPassword(e.target.value)
@@ -58,6 +68,7 @@ async function handleSubmit(e){
                         id='password'
                         type='password'
                         value={password}
+                        autoComplete='none'
                         placeholder='Enter your Password' 
                         required
                         className='w-full rounded-lg border border-zinc-700 bg-zinc-950/80 px-4 py-3 text-zinc-100 outline-none ring-0 transition focus:border-[#31b8c6] focus:shadow-[0_0_0_3px_rgba(49,184,198,0.25)]'/>
