@@ -20,7 +20,7 @@ export async function sendMessage(req,res) {
 
     const userMessage = await messageModel.create({
         chat: chatId ||  chat._id,
-        context: message,
+        content: message,
         role: "user"
     })
     
@@ -30,7 +30,7 @@ export async function sendMessage(req,res) {
 
     const aiMessage = await messageModel.create({
         chat: chatId ||  chat._id,
-        context:result,
+        content:result,
         role: "ai"
     })
 

@@ -6,7 +6,7 @@ const messageSchema = new mongoose.Schema({
         ref:"Chat",
         required:true
     },
-    context:{
+    content:{
         type:String,
         required:true
     },

@@ -13,9 +13,9 @@ export async function genrateResponse(messages){
 
     const response = await model.invoke(messages.map((msg)=>{
         if(msg.role === 'user'){
-            return new HumanMessage(msg.context)
+            return new HumanMessage(msg.content)
         }else if(msg.role === 'ai'){
-            return new AIMessage(msg.context)
+            return new AIMessage(msg.content)
         }
     }))
     return response.text
@@ -36,6 +36,6 @@ export async function generateChatTitle(message) {
             `)
     ])
 
-    return response.text
+    return response.text.replace(/^["']|["']$/g, '').trim()
 }
 

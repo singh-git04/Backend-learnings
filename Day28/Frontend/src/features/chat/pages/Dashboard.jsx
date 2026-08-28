@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 import { useChat } from '../hooks/useChat'
@@ -15,6 +15,7 @@ const Dashboard = () => {
 
   const userName = user?.name || user?.username || 'You'
   const userInitial = userName.charAt(0).toUpperCase()
+  const messagesEndRef = useRef(null)
 
   useEffect(()=>{
     chat.initializeSocketConnection()
@@ -29,15 +30,18 @@ const Dashboard = () => {
       return 
     }
  
-
     chat.handleSendMessage({message: trimmedMessage, chatId: currentChatId})
     setChatInput('')
   }
 
   const openChat = (chatId) => {
-    console.log('clicked chat: ', chatId)
-    chat.handleSendMessage(chatId)
+    chat.handleOpenChat(chatId,chats)
   }
+  useEffect(()=>{
+    messagesEndRef.current?.scrollIntoView({
+      behavior: 'smooth'
+    })
+  },[chats, currentChatId])
 
   return (  
     <main className="flex h-screen w-full overflow-hidden bg-[#0b0d0f] text-zinc-200">
@@ -107,7 +111,7 @@ const Dashboard = () => {
         </header>
 
         <div className="flex flex-1 justify-center overflow-y-auto">
-          <div className="w-auto max-w-6xl px-5 py-10 md:px-8">
+          <div className="w-full max-w-6xl px-5 py-10 md:px-8">
             <div className="mb-10 text-center">
               <h2 className="text-3xl font-semibold tracking-tight text-white md:text-4xl">
                 Where knowledge begins
@@ -126,12 +130,12 @@ const Dashboard = () => {
                   }`}
                 >
                   {message.role === 'ai' && (
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-sm font-bold text-black">
+                    <div  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-sm font-bold text-black">
                       P
                     </div>
                   )}
 
-                  <div
+                  <div 
                     className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-7 ${
                       message.role === 'user'
                         ? 'bg-indigo-600 text-white'
@@ -152,12 +156,13 @@ const Dashboard = () => {
                   )}
                 </div>
               ))}
+              <div ref={messagesEndRef}/>
             </div>
           </div>
         </div>
 
         {/* Prompt input */}
-        <div className="px-5 pb-5 md:px-8 md:pb-8">
+        <div className="mt-5 px-5 pb-5 md:px-8 md:pb-8">
           <form
             onSubmit={handleSubmit}
             className="mx-auto flex max-w-3xl items-end gap-3 rounded-2xl border border-zinc-700 bg-[#171a1d] p-3 shadow-2xl shadow-black/20 focus-within:border-zinc-500"
