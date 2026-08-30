@@ -7,24 +7,24 @@ export const useChat = () => {
 
     const dispatch = useDispatch()
 
-   async function handleSendMessage({message, chatId}){
+    async function handleSendMessage({ message, chatId }) {
         dispatch(setLoading(true))
 
 
-        const data = await sendMessage({message, chatId})
+        const data = await sendMessage({ message, chatId })
 
 
         const { chat, aiMessage } = data
         const id = chat?._id || chatId
 
-        if(chat){
+        if (chat) {
             dispatch(createNewChat({
                 chatId: chat._id,
                 title: chat.title
             }))
         }
-      
-         dispatch(addNewMessage({
+
+        dispatch(addNewMessage({
             chatId: id,
             content: message,
             role: 'user'
@@ -42,33 +42,38 @@ export const useChat = () => {
     async function handleGetChat() {
         dispatch(setLoading(true))
         const data = await getChats()
-        const {chats} = data
-        dispatch(setChats(chats.reduce((acc, chat)=>{
-            acc[ chat._id ] = {
+        const { chats } = data
+        dispatch(setChats(chats.reduce((acc, chat) => {
+            acc[chat._id] = {
                 id: chat._id,
                 title: chat.title,
                 messages: [],
                 lastUpdated: chat.updatedAt,
             }
-            return acc 
+            return acc
         }, {})))
         dispatch(setLoading(false))
     }
 
-    async function handleOpenChat(chatId) {
-        const data = await getMessages({chatId})
+    async function handleOpenChat(chats,chatId) {
+  
+       if (chats[chatId]?.messages.length === 0) {
+
+        const data = await getMessages({ chatId })
         const { messages } = data
 
-       const formattedMessages = messages.map(msg=>({
+        const formattedMessages = messages.map(msg => ({
             content: msg.content,
             role: msg.role,
-       }))
+        }))
 
-       dispatch(addMessages({
+        dispatch(addMessages({
             chatId,
-            messages: formattedMessages 
-       }))
-       dispatch(setCurrentChatId(chatId))
+            messages: formattedMessages
+        }))
+
+    }
+     dispatch(setCurrentChatId(chatId))
     }
     return {
         initializeSocketConnection,

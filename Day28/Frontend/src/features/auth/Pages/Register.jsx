@@ -1,15 +1,35 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import { useAuth } from '../hook/useAuth';
+import { useSelector } from 'react-redux';
 
 const Register = () => {
 const [username, setUsername] = useState('');
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 
+const user = useSelector((state)=>state.auth.user)
+const loading = useSelector((state)=>state.auth.loading)
+
+
+const {handleRegister} = useAuth()
+const navigate = useNavigate()
 
 async function handleSubmit(e){
   e.preventDefault()
+  console.log('register clicked');
   
+  const payload = {
+    username,
+    email,
+    password
+  }
+
+  const success = await handleRegister(payload)
+
+  if(success===true){
+    navigate('/verify-email')
+  }
 }
 
   return (
@@ -71,6 +91,7 @@ async function handleSubmit(e){
               </div>
 
               <button
+              type='submit'
               className='w-full rounded-lg bg-[#31b8c6] px-4 py-3 font-semibold text-zinc-900 hover:bg-[#45c7d4] focus:outline-none focus:shadow-[0_0_0_3px_rgba(49,184,198,0.35)]'
               >Register</button>
 

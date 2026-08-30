@@ -1,5 +1,7 @@
 import { ChatMistralAI } from "@langchain/mistralai";
-import { HumanMessage, SystemMessage ,AIMessage} from "langchain";
+import { HumanMessage, SystemMessage ,AIMessage, tool, createAgent} from "langchain";
+import { searchInternet } from "./internet.service.js";
+import * as z from "zod"
 
 
 
@@ -9,16 +11,41 @@ apiKey: process.env.MISTRAL_APIKEY
 });
 
 
+const searchInternetTool = tool(
+
+    searchInternet,
+    {
+        name: "searchInternet",
+        description: "Use this tool to get latest information from the internet.",
+        schema: z.object({
+            query: z.string().describe("The query to look up on the internet.")
+        })
+    }
+)
+
+
+const agent = createAgent({
+    model: model,
+    tools: [searchInternetTool]
+})
+
 export async function genrateResponse(messages){
 
-    const response = await model.invoke(messages.map((msg)=>{
-        if(msg.role === 'user'){
-            return new HumanMessage(msg.content)
-        }else if(msg.role === 'ai'){
-            return new AIMessage(msg.content)
-        }
-    }))
-    return response.text
+    const response = await agent.invoke({
+        messages:[
+            new SystemMessage(
+                `You are a helpful assistant that provides accurate and relevant information if you don't know something you say you don't knowto the user. if accurate information is available, please provide it. You have access to the internet and can use the searchInternet tool to look up latest information. Please provide clear and concise responses to the user's queries.`
+            ),
+            ...(messages.map((message)=>{
+                if(message.role==="user"){
+                    return new HumanMessage(message.content)
+                }else if(message.role==="ai"){
+                    return new AIMessage(message.content)
+                }
+            }))
+        ]
+    })
+    return response.messages[ response.messages.length - 1].text
 }
 
 
@@ -38,4 +65,3 @@ export async function generateChatTitle(message) {
 
     return response.text.replace(/^["']|["']$/g, '').trim()
 }
-

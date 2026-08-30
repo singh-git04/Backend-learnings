@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
 import { useChat } from '../hooks/useChat'
+import remarkGfm from "remark-gfm"
 
  
 
@@ -35,7 +36,7 @@ const Dashboard = () => {
   }
 
   const openChat = (chatId) => {
-    chat.handleOpenChat(chatId,chats)
+    chat.handleOpenChat( chats,chatId)
   }
   useEffect(()=>{
     messagesEndRef.current?.scrollIntoView({
@@ -129,12 +130,6 @@ const Dashboard = () => {
                     message.role === 'user' ? 'justify-end' : 'justify-start'
                   }`}
                 >
-                  {message.role === 'ai' && (
-                    <div  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-sm font-bold text-black">
-                      P
-                    </div>
-                  )}
-
                   <div 
                     className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-7 ${
                       message.role === 'user'
@@ -143,17 +138,13 @@ const Dashboard = () => {
                     }`}
                   >
                     {message.role === 'ai' ? (
-                      <ReactMarkdown>{message.content}</ReactMarkdown>
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
                     ) : (
                       message.content
                     )}
                   </div>
 
-                  {message.role === 'user' && (
-                    <div className="hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-indigo-500 text-sm font-semibold text-white sm:flex">
-                      {userInitial}
-                    </div>
-                  )}
+                 
                 </div>
               ))}
               <div ref={messagesEndRef}/>
