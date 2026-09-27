@@ -1,0 +1,6 @@
+docker build . -t <cohort_2>       // build image
+
+
+docker run <cohort_2>   // run container
+
+docker run -p 8080:3000 cohort_2        // run on local machine  [ Port mapping ]
